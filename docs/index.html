@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f9fbff;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      }
+
+      img.logo {
+        max-width: 100px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+      }
+
+      h2 {
+        font-size: 20px;
+        color: #0047ab;
+        margin-bottom: 24px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background-color: #0047ab;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      button:hover {
+        background-color: #005de6;
+      }
+
+      .info {
+        font-size: 16px;
+        margin: 10px 0;
+        text-align: left;
+      }
+
+      .info b {
+        display: inline-block;
+        width: 130px;
+        text-align: right;
+        margin-right: 8px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      a.button-link {
+        display: block;
+        background-color: #0047ab;
+        color: white;
+        padding: 14px;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: bold;
+      }
+
+      a.button-link:hover {
+        background-color: #005de6;
+      }
+
+      #error {
+        color: red;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img class="logo" src="https://drive.google.com/thumbnail?id=1OlGM5izvg2ZVSzm8krec1XctTDI56xJg" alt="DJ School Logo" />
+      <h2>Class 11 Login Credentials</h2>
+
+      <div id="input-section">
+        <input type="text" id="mobile" placeholder="Enter your 10-digit mobile number" maxlength="10" />
+        <button onclick="searchStudent()">Search</button>
+        <div id="error"></div>
+      </div>
+
+      <div id="result-section" class="hidden">
+        <div class="info"><b>Name:</b> <span id="name"></span></div>
+        <div class="info"><b>Student Code:</b> <span id="code"></span></div>
+        <div class="info"><b>Class:</b> <span id="class"></span></div>
+
+        <a href="https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/view" target="_blank" class="button-link">
+          View Login Instructions
+        </a>
+        <a href="https://divyajyotschool.co.in/android/app-release.apk" target="_blank" class="button-link">
+          Download DJ School App (Android)
+        </a>
+      </div>
+    </div>
+
+    <script>
+      async function searchStudent() {
+        const mobile = document.getElementById("mobile").value.trim();
+        const error = document.getElementById("error");
+        const result = document.getElementById("result-section");
+        const input = document.getElementById("input-section");
+
+        error.innerText = "";
+        result.classList.add("hidden");
+
+        if (!/^\d{10}$/.test(mobile)) {
+          error.innerText = "❗ Please enter a valid 10-digit mobile number.";
+          return;
+        }
+
+        error.innerText = "🔍 Searching...";
+
+        try {
+          const res = await fetch("https://api.sheetbest.com/sheets/c47fc12b-42e8-4fd8-a9cf-ac143cc403da");
+          const data = await res.json();
+          const student = data.find(row => row.Mobile === mobile);
+
+          if (!student) {
+            error.innerText = "❌ No record found for this number.";
+            return;
+          }
+
+          document.getElementById("name").innerText = student.Name;
+          document.getElementById("code").innerText = student["Student Code"];
+          document.getElementById("class").innerText = student.Standard;
+
+          error.innerText = "";
+          input.classList.add("hidden");
+          result.classList.remove("hidden");
+        } catch (e) {
+          error.innerText = "⚠️ Failed to load data. Try again later.";
+        }
+      }
+    </script>
+  </body>
+</html>
