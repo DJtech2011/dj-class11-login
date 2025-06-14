@@ -30,7 +30,31 @@
       h2 {
         font-size: 20px;
         color: #0047ab;
+        margin-bottom: 16px;
+      }
+
+      .welcome {
+        font-size: 15px;
+        color: #333;
         margin-bottom: 24px;
+        line-height: 1.5;
+      }
+
+      .welcome strong {
+        display: block;
+        color: #0047ab;
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .welcome a {
+        color: #0047ab;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .welcome a:hover {
+        text-decoration: underline;
       }
 
       input {
@@ -103,6 +127,15 @@
     <div class="container">
       <img class="logo" src="https://github.com/DJtech2011/dj-class11-login/blob/main/final_logo.png?raw=true" alt="DJ School Logo" />
       <h2>Class 11 Login Credentials</h2>
+
+      <!-- ✅ Welcome Message START -->
+      <p class="welcome">
+        <strong>WELCOME PARENT OF CLASS 11</strong><br />
+        Please enter your registered mobile number to access login credentials.<br />
+        For assistance, contact
+        <a href="mailto:support@divyajyotschool.org">support@divyajyotschool.org</a>
+      </p>
+      <!-- ✅ Welcome Message END -->
 
       <div id="input-section">
         <input type="text" id="mobile" placeholder="Enter your 10-digit mobile number" maxlength="10" />
