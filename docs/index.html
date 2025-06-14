@@ -203,15 +203,14 @@
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
         <div class="info"><b>Class:</b> <span id="class"></span></div>
 
-        <!-- BUTTON GROUP WITH EXTRA MARGIN -->
+        <!-- BUTTON GROUP -->
         <div class="button-group">
           <button onclick="window.print()" class="button-link">
             🖨️ Download / Print Credentials
           </button>
-
-          <a href="https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/view" target="_blank" class="button-link">
-            View Login Instructions
-          </a>
+          <button onclick="openPdf()" class="button-link">
+            📄 View Login Instructions
+          </button>
           <a href="https://divyajyotschool.co.in/android/app-release.apk" target="_blank" class="button-link">
             Download DJ School App (Android)
           </a>
@@ -269,6 +268,20 @@
 
         } catch (e) {
           error.innerText = "⚠️ Failed to load data. Try again later.";
+        }
+      }
+
+      async function openPdf() {
+        const pdfUrl = "https://drive.google.com/uc?export=download&id=1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs";
+        try {
+          const res = await fetch(pdfUrl);
+          if (!res.ok) throw new Error("PDF not accessible");
+          const blob = await res.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          window.open(blobUrl);
+        } catch (e) {
+          alert("Unable to load PDF. Please try again later.");
+          console.error(e);
         }
       }
     </script>
