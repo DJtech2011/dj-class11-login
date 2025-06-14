@@ -125,18 +125,6 @@
         color: red;
         margin-top: 10px;
       }
-
-      #welcome-screen h2 {
-        font-size: 22px;
-        color: #0047ab;
-        margin: 40px 0;
-        animation: fadeIn 1s ease-in-out;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
     </style>
   </head>
 
@@ -156,11 +144,6 @@
         <input type="text" id="mobile" placeholder="Enter your 10-digit mobile number" maxlength="10" />
         <button onclick="searchStudent()">Search</button>
         <div id="error"></div>
-      </div>
-
-      <!-- Welcome screen (shows after match) -->
-      <div id="welcome-screen" class="hidden">
-        <h2 id="welcome-name">Welcome!</h2>
       </div>
 
       <!-- Final result section -->
@@ -184,12 +167,9 @@
         const error = document.getElementById("error");
         const result = document.getElementById("result-section");
         const input = document.getElementById("input-section");
-        const welcomeScreen = document.getElementById("welcome-screen");
-        const welcomeName = document.getElementById("welcome-name");
 
         error.innerText = "";
         result.classList.add("hidden");
-        welcomeScreen.classList.add("hidden");
 
         if (!/^\d{10}$/.test(mobile)) {
           error.innerText = "❗ Please enter a valid 10-digit mobile number.";
@@ -212,19 +192,9 @@
           document.getElementById("code").innerText = student["Student Code"];
           document.getElementById("class").innerText = student.Standard;
 
-          welcomeName.innerText = `Welcome, ${student.Name}!`;
-
           error.innerText = "";
           input.classList.add("hidden");
-
-          // Show welcome screen first
-          welcomeScreen.classList.remove("hidden");
-
-          // After 3 seconds, show the result
-          setTimeout(() => {
-            welcomeScreen.classList.add("hidden");
-            result.classList.remove("hidden");
-          }, 3000);
+          result.classList.remove("hidden");
 
         } catch (e) {
           error.innerText = "⚠️ Failed to load data. Try again later.";
