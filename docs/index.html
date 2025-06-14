@@ -124,6 +124,18 @@
         color: red;
         margin-top: 10px;
       }
+
+      #student-welcome {
+        font-size: 20px;
+        color: #0047ab;
+        margin-top: 30px;
+        animation: fadeIn 1s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
     </style>
   </head>
 
@@ -145,6 +157,8 @@
         <div id="error"></div>
       </div>
 
+      <div id="student-welcome" class="hidden"></div>
+
       <div id="result-section" class="hidden">
         <div class="info"><b>Name:</b> <span id="name"></span></div>
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
@@ -165,9 +179,11 @@
         const error = document.getElementById("error");
         const result = document.getElementById("result-section");
         const input = document.getElementById("input-section");
+        const welcomeText = document.getElementById("student-welcome");
 
         error.innerText = "";
         result.classList.add("hidden");
+        welcomeText.classList.add("hidden");
 
         if (!/^\d{10}$/.test(mobile)) {
           error.innerText = "❗ Please enter a valid 10-digit mobile number.";
@@ -192,7 +208,16 @@
 
           error.innerText = "";
           input.classList.add("hidden");
-          result.classList.remove("hidden");
+
+          // Show welcome message
+          welcomeText.innerText = `👋 Welcome, ${student.Name}!`;
+          welcomeText.classList.remove("hidden");
+
+          // Show result after 4 seconds
+          setTimeout(() => {
+            welcomeText.classList.add("hidden");
+            result.classList.remove("hidden");
+          }, 4000);
 
         } catch (e) {
           error.innerText = "⚠️ Failed to load data. Try again later.";
