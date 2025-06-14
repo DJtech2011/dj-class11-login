@@ -103,6 +103,10 @@
         font-weight: 600;
       }
 
+      .button-group {
+        margin-top: 32px;
+      }
+
       .hidden {
         display: none;
       }
@@ -199,19 +203,22 @@
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
         <div class="info"><b>Class:</b> <span id="class"></span></div>
 
-        <button onclick="window.print()" class="button-link">
-          🖨️ Download / Print Credentials
-        </button>
+        <!-- BUTTON GROUP WITH EXTRA MARGIN -->
+        <div class="button-group">
+          <button onclick="window.print()" class="button-link">
+            🖨️ Download / Print Credentials
+          </button>
 
-        <a href="https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/view" target="_blank" class="button-link">
-          View Login Instructions
-        </a>
-        <a href="https://divyajyotschool.co.in/android/app-release.apk" target="_blank" class="button-link">
-          Download DJ School App (Android)
-        </a>
-        <a href="https://divyajyotschool.co.in/parent" target="_blank" class="button-link">
-          Open Parent Portal
-        </a>
+          <a href="https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/view" target="_blank" class="button-link">
+            View Login Instructions
+          </a>
+          <a href="https://divyajyotschool.co.in/android/app-release.apk" target="_blank" class="button-link">
+            Download DJ School App (Android)
+          </a>
+          <a href="https://divyajyotschool.co.in/parent" target="_blank" class="button-link">
+            Open Parent Portal
+          </a>
+        </div>
       </div>
     </div>
 
@@ -223,7 +230,6 @@
         const input = document.getElementById("input-section");
         const welcomeText = document.getElementById("student-welcome");
 
-        // Reset all states
         error.innerText = "";
         result.classList.add("hidden");
         welcomeText.innerText = "";
