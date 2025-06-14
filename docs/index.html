@@ -126,7 +126,8 @@
       }
 
       #student-welcome {
-        font-size: 20px;
+        font-size: 24px;
+        font-weight: bold;
         color: #0047ab;
         margin-top: 30px;
         animation: fadeIn 1s ease;
@@ -144,21 +145,25 @@
       <img class="logo" src="https://github.com/DJtech2011/dj-class11-login/blob/main/final_logo.png?raw=true" alt="DJ School Logo" />
       <h2>Class 11 Login Credentials</h2>
 
-      <p class="welcome">
+      <!-- Static Welcome Note -->
+      <p class="welcome" id="welcome-note">
         <strong>WELCOME PARENT OF CLASS 11</strong><br />
         Please enter your registered mobile number to access login credentials.<br />
         For assistance, contact
         <a href="mailto:support@divyajyotschool.org">support@divyajyotschool.org</a>
       </p>
 
+      <!-- Search Input -->
       <div id="input-section">
         <input type="text" id="mobile" placeholder="Enter your 10-digit mobile number" maxlength="10" />
         <button onclick="searchStudent()">Search</button>
         <div id="error"></div>
       </div>
 
+      <!-- Temporary Welcome -->
       <div id="student-welcome" class="hidden"></div>
 
+      <!-- Final Result -->
       <div id="result-section" class="hidden">
         <div class="info"><b>Name:</b> <span id="name"></span></div>
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
@@ -169,6 +174,9 @@
         </a>
         <a href="https://divyajyotschool.co.in/android/app-release.apk" target="_blank" class="button-link">
           Download DJ School App (Android)
+        </a>
+        <a href="https://divyajyotschool.co.in/parent" target="_blank" class="button-link">
+          Open Parent Portal
         </a>
       </div>
     </div>
@@ -181,8 +189,10 @@
         const input = document.getElementById("input-section");
         const welcomeText = document.getElementById("student-welcome");
 
+        // Always hide welcome + result + error at start
         error.innerText = "";
         result.classList.add("hidden");
+        welcomeText.innerText = "";
         welcomeText.classList.add("hidden");
 
         if (!/^\d{10}$/.test(mobile)) {
@@ -202,14 +212,16 @@
             return;
           }
 
+          // Fill values
           document.getElementById("name").innerText = student.Name;
           document.getElementById("code").innerText = student["Student Code"];
           document.getElementById("class").innerText = student.Standard;
 
-          error.innerText = "";
+          // Hide input + welcome note
+          document.getElementById("welcome-note").classList.add("hidden");
           input.classList.add("hidden");
 
-          // Show welcome message
+          // Show temp welcome
           welcomeText.innerText = `👋 Welcome, ${student.Name}!`;
           welcomeText.classList.remove("hidden");
 
@@ -218,7 +230,6 @@
             welcomeText.classList.add("hidden");
             result.classList.remove("hidden");
           }, 4000);
-
         } catch (e) {
           error.innerText = "⚠️ Failed to load data. Try again later.";
         }
