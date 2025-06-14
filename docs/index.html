@@ -203,7 +203,6 @@
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
         <div class="info"><b>Class:</b> <span id="class"></span></div>
 
-        <!-- BUTTON GROUP -->
         <div class="button-group">
           <button onclick="window.print()" class="button-link">
             🖨️ Download / Print Credentials
@@ -271,18 +270,10 @@
         }
       }
 
-      async function openPdf() {
-        const pdfUrl = "https://drive.google.com/uc?export=download&id=1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs";
-        try {
-          const res = await fetch(pdfUrl);
-          if (!res.ok) throw new Error("PDF not accessible");
-          const blob = await res.blob();
-          const blobUrl = URL.createObjectURL(blob);
-          window.open(blobUrl);
-        } catch (e) {
-          alert("Unable to load PDF. Please try again later.");
-          console.error(e);
-        }
+      // ✅ Open Drive preview PDF instead of fetch
+      function openPdf() {
+        const previewUrl = "https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/preview";
+        window.open(previewUrl, "_blank");
       }
     </script>
   </body>
