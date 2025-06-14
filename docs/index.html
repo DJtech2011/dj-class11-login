@@ -21,6 +21,10 @@
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
       }
 
+      .section-block {
+        margin-bottom: 32px;
+      }
+
       img.logo {
         max-width: 160px;
         margin: 0 auto 20px;
@@ -37,7 +41,6 @@
       .welcome {
         font-size: 15px;
         color: #333;
-        margin-bottom: 24px;
         line-height: 1.5;
       }
 
@@ -88,7 +91,7 @@
 
       .info {
         font-size: 16px;
-        margin: 10px 0;
+        margin: 14px 0;
         text-align: left;
       }
 
@@ -137,37 +140,68 @@
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
       }
+
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .container, .container * {
+          visibility: visible;
+        }
+
+        .container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          box-shadow: none;
+        }
+
+        #input-section, #student-welcome, #welcome-note, button:not(:first-of-type), a.button-link {
+          display: none !important;
+        }
+
+        .section-block {
+          margin-bottom: 12px !important;
+        }
+      }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <img class="logo" src="https://github.com/DJtech2011/dj-class11-login/blob/main/final_logo.png?raw=true" alt="DJ School Logo" />
-      <h2>Class 11 Login Credentials</h2>
+      <!-- 🟦 HEADER -->
+      <div class="section-block">
+        <img class="logo" src="https://github.com/DJtech2011/dj-class11-login/blob/main/final_logo.png?raw=true" alt="DJ School Logo" />
+        <h2>Class 11 Login Credentials</h2>
+        <p class="welcome" id="welcome-note">
+          <strong>WELCOME PARENT OF CLASS 11</strong><br />
+          Please enter your registered mobile number to access login credentials.<br />
+          For assistance, contact
+          <a href="mailto:support@divyajyotschool.org">support@divyajyotschool.org</a>
+        </p>
+      </div>
 
-      <!-- Static Welcome Note -->
-      <p class="welcome" id="welcome-note">
-        <strong>WELCOME PARENT OF CLASS 11</strong><br />
-        Please enter your registered mobile number to access login credentials.<br />
-        For assistance, contact
-        <a href="mailto:support@divyajyotschool.org">support@divyajyotschool.org</a>
-      </p>
-
-      <!-- Search Input -->
-      <div id="input-section">
+      <!-- 🔍 SEARCH -->
+      <div id="input-section" class="section-block">
         <input type="text" id="mobile" placeholder="Enter your 10-digit mobile number" maxlength="10" />
         <button onclick="searchStudent()">Search</button>
         <div id="error"></div>
       </div>
 
-      <!-- Temporary Welcome -->
-      <div id="student-welcome" class="hidden"></div>
+      <!-- 👋 WELCOME NAME -->
+      <div id="student-welcome" class="hidden section-block"></div>
 
-      <!-- Final Result -->
-      <div id="result-section" class="hidden">
+      <!-- 🟨 STUDENT INFO + 🟩 FOOTER BUTTONS -->
+      <div id="result-section" class="hidden section-block">
         <div class="info"><b>Name:</b> <span id="name"></span></div>
         <div class="info"><b>Student Code:</b> <span id="code"></span></div>
         <div class="info"><b>Class:</b> <span id="class"></span></div>
+
+        <button onclick="window.print()" class="button-link">
+          🖨️ Download / Print Credentials
+        </button>
 
         <a href="https://drive.google.com/file/d/1ojEvNhCoSzrd8fv5JHKWNbfg3x42lTzs/view" target="_blank" class="button-link">
           View Login Instructions
@@ -189,7 +223,7 @@
         const input = document.getElementById("input-section");
         const welcomeText = document.getElementById("student-welcome");
 
-        // Always hide welcome + result + error at start
+        // Reset all states
         error.innerText = "";
         result.classList.add("hidden");
         welcomeText.innerText = "";
@@ -212,24 +246,21 @@
             return;
           }
 
-          // Fill values
           document.getElementById("name").innerText = student.Name;
           document.getElementById("code").innerText = student["Student Code"];
           document.getElementById("class").innerText = student.Standard;
 
-          // Hide input + welcome note
           document.getElementById("welcome-note").classList.add("hidden");
           input.classList.add("hidden");
 
-          // Show temp welcome
           welcomeText.innerText = `👋 Welcome, ${student.Name}!`;
           welcomeText.classList.remove("hidden");
 
-          // Show result after 4 seconds
           setTimeout(() => {
             welcomeText.classList.add("hidden");
             result.classList.remove("hidden");
           }, 4000);
+
         } catch (e) {
           error.innerText = "⚠️ Failed to load data. Try again later.";
         }
